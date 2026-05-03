@@ -2,72 +2,37 @@
 
 using namespace std;
 
-/**
-* Templates being used for creating a function or method which can use different type of variiables.
-* This provides using same method with different variable types.
+/*
+* uniform_int_distrubition: uniform int generator
+* uniform_real_distrubition: uniform float number generator
+* 
+* these are different from rand() function. More professional usage of the tests are done with these methods.
+* these methods generates nonrepeatedly uniform numbers. This allows professional tests to be more consistent and
+* robust test methods by using the interval values more effected (non-repeated)
 */
 
-//define a function template.
-
-template <typename T>
-T CalculateArea(T a, T b)
-{
-	return a * b;
-
-}
-
-template <typename T>  
-class  rectangle
-{
-private:
-	
-	//variables defined as joker variable with "T".
-	
-	T edge1;
-	T edge2;
-
-public:
-	
-	rectangle(T e1, T e2)
-	{
-		edge1 = e1;
-		edge2 = e2;
-
-	}
-
-	//return type is unknown, so "T" type is used. 
-
-	T area()
-	{
-		return edge1 * edge2;
-
-	}
-
-	void printEdgeValues()
-	{
-		cout << "Edge 1: " << edge1 << endl << "Edge 2: " << edge2 << endl;
-
-	}
-};
+#include <random>			//use this library to access its belongings
 
 int main()
 {
-	//templates can be used for a function or a class.
+	random_device rd;		//real random object (takes from hardware)
 
-	cout << "area: " << CalculateArea(1, 2) << endl;
+	mt19937 motor(rd());	//uniform random number generator motor (Mersenne Twister Algorithm)
 
-	cout << "area: " << CalculateArea(1.2, 2.3) << endl;
+	uniform_int_distribution<int> distribution(0, 10);	//define interval
 
-	//define "int" and "double" type rectangles.	 
+	int randomNumber = distribution(motor);				//generate random number with motor
 
-	rectangle<int> rectangle1(2, 3);
+	cout << "Random Number: " << randomNumber << endl;
 
-	rectangle<double> rectangle2(3.3, 4.4);
+	//random float number generator with uniform_real_distribution
 
-	rectangle1.printEdgeValues();
-	cout << "Area: " << rectangle1.area() << endl;
-	
-	rectangle2.printEdgeValues();
-	cout << "Area: " << rectangle2.area() << endl;
+	uniform_real_distribution<double> distribution2(0, 10);		
+
+	double randomNumber2;
+
+	randomNumber2 = distribution2(motor);
+
+	cout << "Random Number: " << randomNumber2 << endl;
 
 }
